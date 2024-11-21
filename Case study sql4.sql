@@ -1,7 +1,9 @@
+#CREATING A NEW DATABASE
 create database retaildb;
 use retaildb;
 set sql_safe_updates=0;
 
+#CREATING TABLES
 create table products
 (
 p_id int primary key auto_increment,
@@ -26,6 +28,7 @@ s_quantity int not null check (s_quantity>0),
 total_price decimal(10,2) not null
 );
 
+#INSERTING VALUES
 insert into products (p_name, p_price, p_stock) 
 values
 ('Laptop', 800.00, 50),
@@ -50,19 +53,21 @@ values
 (4, '2024-11-04', 4, 100.00),
 (5, '2024-11-05', 10, 150.00);
 
+#VIEWING TABLES
 select * from products;
 select * from supplier;
 select * from sales;
 
-select * from products;
-
+#PRODUCTS STOCK LESS THAN 100
 select * from products where p_stock<100;
 
-select p_name, s_quantity, total_price 
+#SALES OF PRODUCT AND TOTAL PRICES 
+select p_name, s_quantity, sum(s_quantity*price) as Total_price 
 from products p
 join sales s
 on p.p_id = s.product_id;
 
+#TOTAL SALES FOR EACH PRODUCT
 select p_name, sum(s_quantity) as Total_sales
 from products p
 join sales s
