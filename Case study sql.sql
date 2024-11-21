@@ -1,7 +1,10 @@
+#Creating a database
 create database EmployeeManagement;
 use EmployeeManagement;
 set sql_safe_updates=0;
 
+#Creating tables
+  
 create table Department
 (d_id int primary key auto_increment,
 d_name varchar(100) not null);
@@ -32,6 +35,7 @@ a_date date not null,
 a_status enum('Present','Absent','On Leave')
 );
 
+#Inserting values to the tables
 insert into Department (d_name) 
 values
 ('HR'),('Marketing and Sales'),('Finance'),('Production/Operations'),
@@ -88,28 +92,33 @@ values
 (3,'2024-08-12',3),
 (3,'2024-09-12',1);
 
+#Viewing the tables
 select * from Department;
 select * from Employees;
 select * from Projects;
 select * from Employee_Projects order by e_id asc;
 select * from Attendance;
 
+#Queries
+#Retrieve all employees in the 'IT' department.
 select * from Employees
 join
 Department On Employees.e_dept=Department.d_id
 where d_name ='IT';
-
+#(or)
 select e_id,e_name from Employees
 join
 Department On Employees.e_dept=Department.d_id
 where d_name ='IT';
 
+#List all projects with a budget greater than 50000.
 select * from Projects 
 where p_budget>50000;
-
+#(or)
 select p_id,p_name from Projects 
 where p_budget>50000;
 
+#Show the names of employees and the projects they are working on.
 select e_name as Employee_Name,
 p_name as Project_name
 from Employees 
@@ -118,6 +127,8 @@ on Employees.e_id=Employee_Projects.e_id
 join Projects
 on Projects.p_id=Employee_Projects.p_id;
 
+#COUNT THE NUMBER OF EMPLOYEES IN EACH DEPARTMENT.
+  
 select d_name as Department,
 count(e_id) as Employee_count
 from Department
@@ -125,27 +136,33 @@ join Employees
 on Department.d_id=Employees.e_dept
 group by Department.d_name;
 
+#FIND EMPLOYEES WITH A SALARY GREATER THAN 50000.
 select * from Employees where e_salary>50000;
 
+#Get attendance records for a specific employee.
 select * from Attendance where e_id=3;
 
+#INCREASE THE SALARY OF EMPLOYEES IN THE 'HR' DEPARTMENT BY 10%.
 select * from Attendance 
 join Employees
 on
 Employees.e_id=Attendance.e_id
 where e_name='Devyanth';
 
+#CHANGE THE DEPARTMENT OF AN EMPLOYEE.
 update Employees
 set e_salary=e_salary*1.10
 where e_dept=1;
-
+#(or)
 update Employees
 set e_salary=e_salary*1.10
 where e_dept=
 (select d_id from Department
 where d_name='HR');
 
+#VIEWING THE CHANGES MADE IN THE TABLE
 select * from Employees;
+
 
 update Employees
 set e_dept=5 where e_id =11;
