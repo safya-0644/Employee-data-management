@@ -1,7 +1,9 @@
+#CREATING A DATABASE
 create database LibraryDB;
 use LibraryDB;
 set sql_safe_updates=0;
 
+#CREATING TABLES
 create table books
 (
 b_id int primary key auto_increment,
@@ -31,6 +33,7 @@ borrow_date date not null,
 return_date date
 );
 
+#INSERTING VALUES
 insert into books 
 (b_title,b_author, published_year,b_genre)
 values
@@ -74,11 +77,12 @@ values
 (4, 2, '2023-11-03', NULL),
 (5, 3, '2023-10-05', '2023-10-12');
 
+#VIEWING TABLES
 select * from books;
 select * from members_table;
 select * from borrowing_table;
 
-
+#SHOW BORROWING RECORDS WITH MEMBER NAMES AND BOOK TITLES
 select book_id,
 b_title as Book_title,
 member_id,
@@ -91,7 +95,7 @@ on books.b_id=b.book_id
 join members_table m
 on m.m_id=b.member_id;
 
-
+#COUNT NUMBER OF BOOKS BORROWED BY EACH MEMBER
 select member_id,
 m_name as Member_name,
 Count(id)
