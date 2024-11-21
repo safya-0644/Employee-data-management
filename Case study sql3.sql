@@ -1,3 +1,4 @@
+#CREATING DATABASE
 create database StudentDB;
 use StudentDB;
 set sql_safe_updates=0;
@@ -27,6 +28,7 @@ grade char(1),
 primary key(student_id,course_id)
 );
 
+#INSERTING VALUES
 insert into student
 (s_name,s_age,s_email) 
 values
@@ -60,10 +62,12 @@ values
 (6,5,'A'),
 (6,3,'C');
 
+#VIEWING TABLES
 select * from student;
 select * from course;
 select * from enrollment;
 
+#NAME OF THE STUDENTS AND THE COURSES THEY ARE ENROLLED IN
 select s_id,s_name,c_name
 from course c
 join enrollment e
@@ -71,7 +75,7 @@ on c.c_id=e.course_id
 join student s
 on s.s_id=e.student_id;
 
-
+#COUNT OF STUDENTS ENROLLED IN EACH COURSE
 select c_name as Course_name,
 Count(student_id) as Count_of_students
 from enrollment e
