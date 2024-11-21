@@ -1,10 +1,9 @@
-#Creating a database
+#CREATING A DATABASE
 create database EmployeeManagement;
 use EmployeeManagement;
 set sql_safe_updates=0;
 
-#Creating tables
-  
+#CREATING TABLES
 create table Department
 (d_id int primary key auto_increment,
 d_name varchar(100) not null);
@@ -35,7 +34,7 @@ a_date date not null,
 a_status enum('Present','Absent','On Leave')
 );
 
-#Inserting values to the tables
+#INSERTING VALUES TO THE TABLES
 insert into Department (d_name) 
 values
 ('HR'),('Marketing and Sales'),('Finance'),('Production/Operations'),
@@ -92,14 +91,14 @@ values
 (3,'2024-08-12',3),
 (3,'2024-09-12',1);
 
-#Viewing the tables
+#VIEWING THE TABLES
 select * from Department;
 select * from Employees;
 select * from Projects;
 select * from Employee_Projects order by e_id asc;
 select * from Attendance;
 
-#Queries
+#QUERIES
 #Retrieve all employees in the 'IT' department.
 select * from Employees
 join
@@ -111,14 +110,14 @@ join
 Department On Employees.e_dept=Department.d_id
 where d_name ='IT';
 
-#List all projects with a budget greater than 50000.
+#LIST ALL PROJECTS WITH A BUDGET GREATER THAN 50000.
 select * from Projects 
 where p_budget>50000;
 #(or)
 select p_id,p_name from Projects 
 where p_budget>50000;
 
-#Show the names of employees and the projects they are working on.
+#SHOW THE NAMES OF EMPLOYEES AND THE PROJECTS THEY ARE WORKING ON.
 select e_name as Employee_Name,
 p_name as Project_name
 from Employees 
@@ -128,7 +127,6 @@ join Projects
 on Projects.p_id=Employee_Projects.p_id;
 
 #COUNT THE NUMBER OF EMPLOYEES IN EACH DEPARTMENT.
-  
 select d_name as Department,
 count(e_id) as Employee_count
 from Department
@@ -139,7 +137,7 @@ group by Department.d_name;
 #FIND EMPLOYEES WITH A SALARY GREATER THAN 50000.
 select * from Employees where e_salary>50000;
 
-#Get attendance records for a specific employee.
+#GET ATTENDANCE RECORDS FOR A SPECIFIC EMPLOYEE.
 select * from Attendance where e_id=3;
 
 #INCREASE THE SALARY OF EMPLOYEES IN THE 'HR' DEPARTMENT BY 10%.
@@ -163,10 +161,10 @@ where d_name='HR');
 #VIEWING THE CHANGES MADE IN THE TABLE
 select * from Employees;
 
-
+#CHANGE THE DEPARTMENT OF AN EMPLOYEE.
 update Employees
 set e_dept=5 where e_id =11;
-
+#(or)
 update Employees
 set e_dept=
 (select d_id from Department where d_name='R&D')
@@ -174,6 +172,7 @@ where e_id=11;
 
 select * from Employees;
 
+#REMOVE AN EMPLOYEE WHO HAS RESIGNED.
 delete from Attendance
 where e_id=10;
 delete from Employees
@@ -181,32 +180,35 @@ where e_id=10;
 delete from Employee_Projects
 where e_id=10;
 
-
+#VIEWING CHANGES
 select * from Department;
 select * from Employees;
 select * from Projects;
 select * from Employee_Projects order by e_id asc;
 select * from Attendance;
 
+#DELETE A PROJECT THAT IS COMPLETED.
 delete from Employee_Projects
 where p_id=101;
 delete from Projects
 where
 p_name = 'Project A';
 
-
+#VIEWING TABLE
 select * from Projects;
 select * from Employee_Projects order by e_id asc;
 
+#ADD A UNIQUE CONSTRAINT TO THE `EMAIL` COLUMN IN `EMPLOYEES` TABLE.
 alter table Employees add column 
 e_email varchar(100);
-
+#(OR)
 alter table Employees add constraint 
 u_eemail unique(e_email);
+
+#VIEWING TABLE
 select * from Employees;
 
-
-
+#ADDING THE VALUES
 update Employees
 set e_email=case
 when e_name='Sumith' then 'sumithverma@gmail.com'
@@ -223,40 +225,43 @@ when e_name='Courtney' then 'courtneythomas@gmail.com'
 when e_name='Sam' then 'sammealuse@gmail.com'
 end;
 
-
+#VIEWING TABLE
 select * from Employees;
 
+#CONSTRAINT VIOLATION
+insert into Employees #email
+(e_name,e_age,e_gender,e_salary,e_dept,e_email)
+values
+('Sumanth',21,'Male',32000,'3','sumithverma@gmail.com');
+
+#ENSURE `AGE` IS ALWAYS GREATER THAN 18.
 alter table Employees
 add constraint
 chk_age check (e_age>18);
 select * from Employees;
 
+#CONSTRAINT VIOLATION
+insert into Employees #age
+(e_name,e_age,e_gender,e_salary,e_dept,e_email)
+values
+('Sumanth',11,'Male',32000,'3','sumanth@gmail.com');
 
+#ADD A DEFAULT VALUE 'UNKNOWN' TO `GENDER` IF NOT SPECIFIED.
 alter table Employees
 modify e_gender varchar(10) 
 not null default 'Unknown';
 
-insert into Employees
+#CONSTRAINT USE
+insert into Employees # Gender
 (e_name,e_age,e_salary,e_dept,e_email)
 values
 ('Sumanth',21,32000,'3','sumanth@gmail.com');
 
 select * from Employees;
 
-insert into Employees # Gender
-(e_name,e_age,e_salary,e_dept,e_email)
-values
-('Sumanth',21,32000,'3','sumanth@gmail.com');
 
-insert into Employees #age
-(e_name,e_age,e_gender,e_salary,e_dept,e_email)
-values
-('Sumanth',11,'Male',32000,'3','sumanth@gmail.com');
 
-insert into Employees #email
-(e_name,e_age,e_gender,e_salary,e_dept,e_email)
-values
-('Sumanth',21,'Male',32000,'3','sumithverma@gmail.com');
+
 
 
 
