@@ -1,8 +1,9 @@
-
+#CREATING A NEW DATABASE
+create database hospitaldb;
 use hospitaldb;
 set sql_safe_updates=0;
 
-
+#CREATING TABLES
 create table patients
 (
 p_id int primary key auto_increment,
@@ -30,6 +31,7 @@ appointment_date date not null,
 status enum('Scheduled','Completed','Cancelled')
 );
 
+#INSERTING VALUES
 Insert into patients 
 (p_name, p_age, p_gender, p_contact) 
 values
@@ -67,13 +69,12 @@ values
 (9,4,'2024-11-24',1),
 (10,4,'2024-11-20',2);
 
+#VIEWING TABLES
 select * from patients;
 select * from doctors;
 select * from appointments;
 
-select * from patients;
-select * from doctors;
-
+#APPOINTMENT DETAILS WITH PATIENT AND DOCTOR NAME
 select p_name, d_name, appointment_date
 from patients p
 join appointments a
@@ -81,6 +82,7 @@ on p.p_id=a.patient_id
 join doctors d
 on d.d_id=a.doctor_id;
 
+#COUNT OF APPOINTMENTS PER DOCTOR
 select d_name as Doctor_name,
 count(id) as Appointment_count
 from doctors d
