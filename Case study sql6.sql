@@ -1,7 +1,9 @@
+#CREATE A NEW DATABASE
 create database learningDB;
 use learningDB;
 set sql_safe_updates=0;
 
+#CREATING TABLES
 create table courses
 (
 c_id int primary key auto_increment,
@@ -34,7 +36,7 @@ enrollment_date date not null,
 primary key(student_id,course_id)
 );
 
-
+#INSERTING VALUES
 insert into courses
 (c_title, description) 
 values
@@ -69,14 +71,13 @@ values
 (1, 3, '2024-11-19'), 
 (2, 4, '2024-11-20');
 
+#VIEWING TABLES
 select * from courses;
 select* from instructor;
 select * from students;
 select * from enrollments;
 
-select * from courses;
-select* from instructor;
-
+#ENROLLMENT WITH STUDENTS AND COURSES TITLE
 select s_name, c_title,enrollment_date
 from students s
 join enrollments e
@@ -84,6 +85,7 @@ on s.s_id=e.student_id
 join courses c
 on c.c_id=e.course_id;
 
+#COUNT OF STUDENTS ENROLLMENT IN EACH COURSE
 select c_title as Course_title,
 count(student_id) as Student_count
 from enrollments e
